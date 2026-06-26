@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(/usr/local/bin/node_modules/.bin/tsc --noEmit)",
+      "Bash(node ./node_modules/.bin/tsc --noEmit)",
+      "Bash(./node_modules/.bin/tsc --noEmit)",
+      "Bash(ls \"/Users/yagozardo/Documents/Cowork OS/Work HQ/MSA Redesign + AI-powered triaging tool /\")",
+      "Read(//Users/yagozardo/**)",
+      "Read(//opt/homebrew/bin/**)",
+      "Bash(find /Users/yagozardo -name \"pnpm\" -type f 2>/dev/null | head -5; find /usr/local -name \"node\" -type f 2>/dev/null | head -3)",
+      "Bash(curl -fsSL https://get.pnpm.io/install.sh)",
+      "Bash(env PNPM_HOME=/Users/yagozardo/.pnpm sh -)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}
