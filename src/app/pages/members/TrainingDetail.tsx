@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router";
 import { useState } from "react";
 import { ArrowLeft, User, Calendar, MapPin, Clock, Video, Users, Check } from "lucide-react";
-import { upcomingWebinars, trainingSessions } from "../../data/trainingData";
+import { upcomingWebinars, trainingSessions, trainerProfiles } from "../../data/trainingData";
 
 // Richer, title-matched descriptions for the detail view (cards show the short
 // summary from the data; here we expand on what each session covers).
@@ -27,7 +27,9 @@ interface Detail {
   title: string;
   trainer: string;
   date: string;
-  location: string;
+  location?: string;
+  timeEast?: string;
+  timeWest?: string;
   duration?: string;
   image?: string;
   description?: string;
@@ -53,7 +55,8 @@ export default function TrainingDetail() {
         title: w.title,
         trainer: w.presenter,
         date: w.date,
-        location: "Online",
+        timeEast: w.timeEast,
+        timeWest: w.timeWest,
         image: w.image,
         description: w.description,
         registered: w.registered,
@@ -133,10 +136,10 @@ export default function TrainingDetail() {
           <img
             src={detail.image}
             alt={detail.title}
-            className="w-full max-h-[280px] object-cover"
+            className="w-full h-64 md:h-80 object-cover"
           />
         ) : (
-          <div className="w-full h-[280px] bg-gradient-to-br from-stone-800 to-stone-600" />
+          <div className="w-full h-64 md:h-80 bg-gradient-to-br from-stone-800 to-stone-600" />
         )}
       </div>
 
@@ -165,10 +168,24 @@ export default function TrainingDetail() {
           <Calendar className="w-4 h-4" />
           <span>{new Date(detail.date).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</span>
         </div>
-        <div className="flex items-center gap-2">
-          <MapPin className="w-4 h-4" />
-          <span>{detail.location}</span>
-        </div>
+        {detail.timeEast && (
+          <div className="flex items-center gap-2">
+            <Clock className="w-4 h-4" />
+            <span>{detail.timeEast}</span>
+          </div>
+        )}
+        {detail.timeWest && (
+          <div className="flex items-center gap-2">
+            <Clock className="w-4 h-4" />
+            <span>{detail.timeWest}</span>
+          </div>
+        )}
+        {detail.location && !detail.timeEast && (
+          <div className="flex items-center gap-2">
+            <MapPin className="w-4 h-4" />
+            <span>{detail.location}</span>
+          </div>
+        )}
         {detail.duration && (
           <div className="flex items-center gap-2">
             <Clock className="w-4 h-4" />
@@ -190,6 +207,25 @@ export default function TrainingDetail() {
         <h2 className="font-semibold mb-2">About this session</h2>
         <p className="text-stone-600 leading-relaxed">{description}</p>
       </div>
+
+      {/* Your Trainer */}
+      {trainerProfiles[detail.trainer] && (
+        <div className="bg-white rounded-xl border border-stone-200 p-6 mb-6">
+          <h2 className="font-semibold mb-4">Your Trainer</h2>
+          <div className="flex gap-4">
+            <img
+              src={trainerProfiles[detail.trainer].image}
+              alt={detail.trainer}
+              className="w-16 h-16 rounded-full object-cover flex-shrink-0"
+            />
+            <div>
+              <p className="font-semibold">{detail.trainer}</p>
+              <p className="text-stone-500 text-sm">{trainerProfiles[detail.trainer].title}</p>
+              <p className="text-stone-600 text-sm mt-1">{trainerProfiles[detail.trainer].bio}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 7. Register button */}
       {confirming ? (

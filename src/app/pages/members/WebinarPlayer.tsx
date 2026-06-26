@@ -1,19 +1,24 @@
 import { Link, useParams } from "react-router";
 import { ArrowLeft, User, Calendar, Eye, FileText } from "lucide-react";
+import { onDemandWebinars, trainerProfiles } from "../../data/trainingData";
 
 export default function WebinarPlayer() {
   const { id } = useParams();
 
-  const webinar = {
-    id: id,
-    title: "LG Inverter Compressor Repair Techniques",
-    presenter: "Rick Kuemin",
-    date: "2026-04-15",
-    duration: "45 min",
-    category: "Refrigeration",
-    views: 342,
-    description: "Learn advanced techniques for diagnosing and repairing LG inverter compressors, including common failure modes, testing procedures, and replacement best practices."
+  const matched = onDemandWebinars.find(w => w.id === Number(id));
+  const webinar = matched ?? {
+    id: Number(id),
+    title: "Recorded Webinar",
+    presenter: "MSA Trainer",
+    date: "2026-01-01",
+    duration: "—",
+    category: "Training",
+    views: 0,
+    description: "This recording is not available.",
+    image: undefined as string | undefined,
   };
+
+  const trainer = trainerProfiles[webinar.presenter];
 
   const relatedDocs = [
     { title: "LG Refrigerator Service Manual", model: "LFXS26973S" },
@@ -39,8 +44,12 @@ export default function WebinarPlayer() {
         {/* Video Player */}
         <div className="lg:col-span-2">
           <div className="bg-white rounded-xl border border-stone-200 overflow-hidden mb-6">
-            <div className="aspect-video bg-gradient-to-br from-stone-800 to-stone-600 flex items-center justify-center">
-              <div className="text-center text-white">
+            <div className="relative aspect-video bg-gradient-to-br from-stone-800 to-stone-600 flex items-center justify-center">
+              {webinar.image && (
+                <img src={webinar.image} alt={webinar.title} className="absolute inset-0 w-full h-full object-cover" />
+              )}
+              <div className="absolute inset-0 bg-black/50" />
+              <div className="relative text-center text-white">
                 <div className="w-24 h-24 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg className="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
@@ -84,6 +93,25 @@ export default function WebinarPlayer() {
 
         {/* Sidebar */}
         <div className="space-y-6">
+          {/* Your Trainer */}
+          {trainer && (
+            <div className="bg-white rounded-xl border border-stone-200 p-6">
+              <h3 className="font-semibold mb-4">Your Trainer</h3>
+              <div className="flex gap-4">
+                <img
+                  src={trainer.image}
+                  alt={webinar.presenter}
+                  className="w-16 h-16 rounded-full object-cover flex-shrink-0"
+                />
+                <div>
+                  <p className="font-semibold">{webinar.presenter}</p>
+                  <p className="text-stone-500 text-sm">{trainer.title}</p>
+                  <p className="text-stone-600 text-sm mt-1">{trainer.bio}</p>
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Related Documents */}
           <div className="bg-white rounded-xl border border-stone-200 p-6">
             <h3 className="font-semibold mb-4 flex items-center gap-2">

@@ -1,4 +1,29 @@
-// Shared training data — imported by Training.tsx (list) and TrainingDetail.tsx (detail).
+// Shared training data — imported by Training.tsx (list), TrainingDetail.tsx (detail),
+// and WebinarPlayer.tsx (recorded webinars).
+
+const mitchImage = new URL('../../imports/mitch.jpg', import.meta.url).href;
+const rickImage = new URL('../../imports/rick.jpg', import.meta.url).href;
+const georgeImage = new URL('../../imports/george.jpg', import.meta.url).href;
+
+// Trainer profiles for the "Your Trainer" tile, keyed by full name to match the
+// trainer/presenter on each session or webinar.
+export const trainerProfiles: Record<string, { image: string; title: string; bio: string }> = {
+  "George Schick": {
+    image: georgeImage,
+    title: "Content & Resources Manager",
+    bio: "George has managed MSA's technical library since 2013, building relationships with every major OEM to curate over 10,000 service manuals and training videos. He fields hundreds of member questions each month and knows the most common field failures inside out.",
+  },
+  "Rick Kuemin": {
+    image: rickImage,
+    title: "Master Technician, West & Mountain Region",
+    bio: "Rick brings over 30 years of hands-on experience in refrigeration, HVAC, and high-voltage appliance repair. He's widely considered one of the top trainers in the appliance service industry and is returning to MSA after a successful run as a lead instructor.",
+  },
+  "Mitch Williams": {
+    image: mitchImage,
+    title: "Field Trainer, Central & Eastern US",
+    bio: "Mitch spends most of the year on the road, training 30 technicians a day across dozens of cities. His hands-on workshops are known for being practical, fast-paced, and directly applicable to real field calls.",
+  },
+};
 
 export interface UpcomingWebinar {
   id: number;
@@ -28,6 +53,18 @@ export interface TrainingSession {
   registered: boolean;
 }
 
+export interface OnDemandWebinar {
+  id: number;
+  title: string;
+  presenter: string;
+  date: string;
+  duration: string;
+  category: string;
+  description?: string;
+  image?: string;
+  views: number;
+}
+
 export const upcomingWebinars: UpcomingWebinar[] = [
   {
     id: 1,
@@ -38,7 +75,7 @@ export const upcomingWebinars: UpcomingWebinar[] = [
     timeWest: "11:00 AM PST",
     category: "Refrigeration",
     description: "Isolate sealed-system faults using pressure and temperature readings, and learn compressor testing techniques for modern refrigeration units.",
-    image: "https://picsum.photos/seed/refrigeration-diagnostics/320/180",
+    image: "https://picsum.photos/seed/refrigeration-diagnostics/800/450",
     registered: false,
   },
   {
@@ -50,7 +87,7 @@ export const upcomingWebinars: UpcomingWebinar[] = [
     timeWest: "12:00 PM PST",
     category: "Laundry",
     description: "Decode washer fault codes and use voltage testing to pinpoint control board failures across major front- and top-load platforms.",
-    image: "https://picsum.photos/seed/washer-control-board/320/180",
+    image: "https://picsum.photos/seed/washer-control-board/800/450",
     registered: true,
   },
   {
@@ -62,7 +99,7 @@ export const upcomingWebinars: UpcomingWebinar[] = [
     timeWest: "10:00 AM PST",
     category: "Dishwasher",
     description: "Trace fill, drain, and recirculation paths to diagnose leaks, clogs, and sensor faults in today's dishwasher water systems.",
-    image: "https://picsum.photos/seed/dishwasher-water-systems/320/180",
+    image: "https://picsum.photos/seed/dishwasher-water-systems/800/450",
     registered: false,
   },
 ];
@@ -123,5 +160,41 @@ export const trainingSessions: TrainingSession[] = [
     description: "A focused virtual session on electric range control boards, element circuits, and safe high-voltage troubleshooting.",
     image: "https://picsum.photos/seed/electric-range-controls/320/180",
     registered: false,
+  },
+];
+
+export const onDemandWebinars: OnDemandWebinar[] = [
+  {
+    id: 101,
+    title: "LG Inverter Compressor Repair Techniques",
+    presenter: "Rick Kuemin",
+    date: "2026-04-15",
+    duration: "45 min",
+    category: "Refrigeration",
+    description: "LG's linear inverter compressors fail in ways traditional compressors don't, and this recorded session shows you exactly what to look for. We walk through diagnosing a dead or weak inverter compressor, recovering and recharging the sealed system, and confirming the repair with proper readings. You'll see the special tools and connectors LG uses and how to avoid the common mistakes that lead to comebacks. Ideal for techs who want to take on more refrigeration work with confidence.",
+    image: "https://picsum.photos/seed/lg-inverter-compressor/800/450",
+    views: 342,
+  },
+  {
+    id: 102,
+    title: "Whirlpool Front Load Washer Seal Replacement",
+    presenter: "George Schick",
+    date: "2026-04-08",
+    duration: "38 min",
+    category: "Laundry",
+    description: "The door boot seal is one of the most common — and most botched — front-load washer repairs. In this full teardown, George walks through removing the old boot, cleaning the tub flange, and seating the new seal and spring clamps correctly so it never leaks. He covers the model variations you'll encounter in the field and the shortcuts that actually save time. A must-watch for any tech tired of callbacks on washer leaks.",
+    image: "https://picsum.photos/seed/whirlpool-washer-seal/800/450",
+    views: 289,
+  },
+  {
+    id: 103,
+    title: "Understanding Modern Range Control Systems",
+    presenter: "Mitch Williams",
+    date: "2026-03-30",
+    duration: "52 min",
+    category: "Cooking",
+    description: "Modern electric and gas ranges are run by electronic control boards, relay boards, and a web of temperature sensors. This session breaks down how those parts work together, how to read the circuits, and how to isolate a failed board from a failed element or sensor. Mitch shares the diagnostic sequence he uses to avoid replacing good boards. Perfect for technicians expanding into cooking-appliance repair.",
+    image: "https://picsum.photos/seed/modern-range-controls/800/450",
+    views: 421,
   },
 ];

@@ -1,49 +1,13 @@
 import { Link } from "react-router";
 import { useState, useRef, useEffect } from "react";
 import { Calendar, MapPin, User, Users, Video, Check, Search, ChevronDown, Filter, X, Clock } from "lucide-react";
-import { upcomingWebinars, trainingSessions } from "../../data/trainingData";
+import { upcomingWebinars, trainingSessions, onDemandWebinars } from "../../data/trainingData";
 
 const mitchImage = new URL('../../../imports/mitch.jpg', import.meta.url).href;
 const rickImage = new URL('../../../imports/rick.jpg', import.meta.url).href;
 const georgeImage = new URL('../../../imports/george.jpg', import.meta.url).href;
 
 // ── Data ────────────────────────────────────────────────────────────────────
-
-const onDemandWebinars = [
-  {
-    id: 101,
-    title: "LG Inverter Compressor Repair Techniques",
-    presenter: "Rick Kuemin",
-    date: "2026-04-15",
-    duration: "45 min",
-    category: "Refrigeration",
-    description: "Step-by-step techniques for diagnosing and replacing LG linear inverter compressors, including sealed-system recovery and recharge.",
-    image: "https://picsum.photos/seed/lg-inverter-compressor/320/180",
-    views: 342,
-  },
-  {
-    id: 102,
-    title: "Whirlpool Front Load Washer Seal Replacement",
-    presenter: "George Schick",
-    date: "2026-04-08",
-    duration: "38 min",
-    category: "Laundry",
-    description: "A full teardown showing how to replace the door boot seal on Whirlpool front-load washers without damaging the drum or tub.",
-    image: "https://picsum.photos/seed/whirlpool-washer-seal/320/180",
-    views: 289,
-  },
-  {
-    id: 103,
-    title: "Understanding Modern Range Control Systems",
-    presenter: "Mitch Williams",
-    date: "2026-03-30",
-    duration: "52 min",
-    category: "Cooking",
-    description: "Break down electronic oven controls, relay boards, and temperature sensors to confidently service modern electric and gas ranges.",
-    image: "https://picsum.photos/seed/modern-range-controls/320/180",
-    views: 421,
-  },
-];
 
 const trainers = [
   {
@@ -773,7 +737,7 @@ export default function Training() {
                   const isConfirming = showConfirmation?.type === "webinar" && showConfirmation.id === webinar.id;
 
                   return (
-                    <div key={webinar.id} className="bg-white rounded-xl border border-stone-200 p-6 hover:border-[#D7272D] transition-all">
+                    <Link key={webinar.id} to={`/members/training/webinar-${webinar.id}`} className="block bg-white rounded-xl border border-stone-200 p-6 hover:border-[#D7272D] transition-all">
                       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                         <div className="flex flex-1 flex-col sm:flex-row gap-4">
                           <img
@@ -832,7 +796,7 @@ export default function Training() {
                             </button>
                           ) : (
                             <button
-                              onClick={() => handleRegisterWebinar(webinar.id)}
+                              onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleRegisterWebinar(webinar.id); }}
                               className="px-6 py-3 bg-[#D7272D] text-white rounded-full font-semibold hover:bg-[#b92127] transition-colors whitespace-nowrap"
                             >
                               Register
@@ -840,7 +804,7 @@ export default function Training() {
                           )}
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   );
                 })}
               </div>
