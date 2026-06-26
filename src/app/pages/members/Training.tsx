@@ -1,45 +1,13 @@
 import { Link } from "react-router";
 import { useState, useRef, useEffect } from "react";
 import { Calendar, MapPin, User, Users, Video, Check, Search, ChevronDown, Filter, X, Clock } from "lucide-react";
+import { upcomingWebinars, trainingSessions } from "../../data/trainingData";
 
 const mitchImage = new URL('../../../imports/mitch.jpg', import.meta.url).href;
 const rickImage = new URL('../../../imports/rick.jpg', import.meta.url).href;
 const georgeImage = new URL('../../../imports/george.jpg', import.meta.url).href;
 
 // ── Data ────────────────────────────────────────────────────────────────────
-
-const upcomingWebinars = [
-  {
-    id: 1,
-    title: "Advanced Refrigeration Diagnostics",
-    presenter: "Rick Kuemin",
-    date: "2026-05-22",
-    timeEast: "2:00 PM EST",
-    timeWest: "11:00 AM PST",
-    category: "Refrigeration",
-    registered: false,
-  },
-  {
-    id: 2,
-    title: "Washing Machine Control Board Troubleshooting",
-    presenter: "George Schick",
-    date: "2026-05-28",
-    timeEast: "3:00 PM EST",
-    timeWest: "12:00 PM PST",
-    category: "Laundry",
-    registered: true,
-  },
-  {
-    id: 3,
-    title: "Dishwasher Water Management Systems",
-    presenter: "Mitch Williams",
-    date: "2026-06-05",
-    timeEast: "1:00 PM EST",
-    timeWest: "10:00 AM PST",
-    category: "Dishwasher",
-    registered: false,
-  },
-];
 
 const onDemandWebinars = [
   {
@@ -49,6 +17,8 @@ const onDemandWebinars = [
     date: "2026-04-15",
     duration: "45 min",
     category: "Refrigeration",
+    description: "Step-by-step techniques for diagnosing and replacing LG linear inverter compressors, including sealed-system recovery and recharge.",
+    image: "https://picsum.photos/seed/lg-inverter-compressor/320/180",
     views: 342,
   },
   {
@@ -58,6 +28,8 @@ const onDemandWebinars = [
     date: "2026-04-08",
     duration: "38 min",
     category: "Laundry",
+    description: "A full teardown showing how to replace the door boot seal on Whirlpool front-load washers without damaging the drum or tub.",
+    image: "https://picsum.photos/seed/whirlpool-washer-seal/320/180",
     views: 289,
   },
   {
@@ -67,58 +39,9 @@ const onDemandWebinars = [
     date: "2026-03-30",
     duration: "52 min",
     category: "Cooking",
+    description: "Break down electronic oven controls, relay boards, and temperature sensors to confidently service modern electric and gas ranges.",
+    image: "https://picsum.photos/seed/modern-range-controls/320/180",
     views: 421,
-  },
-];
-
-const trainingSessions = [
-  {
-    id: 1,
-    title: "Hands-On Refrigeration Masterclass",
-    trainer: "Rick Kuemin",
-    format: "hands-on",
-    location: "Dallas, TX",
-    date: "2026-06-15",
-    duration: "2 days",
-    spots: 8,
-    totalSpots: 12,
-    registered: false,
-  },
-  {
-    id: 2,
-    title: "Virtual: Washing Machine Advanced Diagnostics",
-    trainer: "George Schick",
-    format: "virtual",
-    location: "Online",
-    date: "2026-06-20",
-    duration: "3 hours",
-    spots: 24,
-    totalSpots: 50,
-    registered: true,
-  },
-  {
-    id: 3,
-    title: "Hands-On Dishwasher Repair Workshop",
-    trainer: "Mitch Williams",
-    format: "hands-on",
-    location: "Phoenix, AZ",
-    date: "2026-07-10",
-    duration: "1 day",
-    spots: 5,
-    totalSpots: 15,
-    registered: false,
-  },
-  {
-    id: 4,
-    title: "Virtual: Electric Range Control Systems",
-    trainer: "Rick Kuemin",
-    format: "virtual",
-    location: "Online",
-    date: "2026-07-18",
-    duration: "2 hours",
-    spots: 35,
-    totalSpots: 50,
-    registered: false,
   },
 ];
 
@@ -323,6 +246,8 @@ export default function Training() {
         timeEast: w.timeEast,
         timeWest: w.timeWest,
         category: w.category,
+        description: w.description,
+        image: w.image,
         registered: registeredWebinars.includes(w.id),
       })),
       ...trainingSessions.filter(matchesSessionSearch).map(s => ({
@@ -336,6 +261,8 @@ export default function Training() {
         duration: s.duration,
         spots: s.spots,
         totalSpots: s.totalSpots,
+        description: s.description,
+        image: s.image,
         registered: registeredSessions.includes(s.id),
       })),
     ],
@@ -498,42 +425,51 @@ export default function Training() {
               const isConfirming = showConfirmation?.type === "webinar" && showConfirmation.id === item.id;
 
               return (
-                <div key={`w-${item.id}`} className="bg-white rounded-xl border border-stone-200 p-6 hover:border-[#D7272D] transition-all">
+                <Link key={`w-${item.id}`} to={`/members/training/${item.kind}-${item.id}`} className="block bg-white rounded-xl border border-stone-200 p-6 hover:border-[#D7272D] transition-all">
                   <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full">
-                          Webinar
-                        </span>
-                        <span className="bg-purple-100 text-purple-700 text-xs px-3 py-1 rounded-full">
-                          {item.category}
-                        </span>
-                        {isRegistered && (
-                          <span className="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full flex items-center gap-1">
-                            <Check className="w-3 h-3" />
-                            Registered
+                    <div className="flex flex-1 flex-col sm:flex-row gap-4">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full sm:w-40 h-[120px] object-cover rounded-lg flex-shrink-0"
+                      />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-violet-100 text-violet-700 text-xs px-3 py-1 rounded-full">
+                            Webinar
                           </span>
-                        )}
-                      </div>
+                          <span className="bg-purple-100 text-purple-700 text-xs px-3 py-1 rounded-full">
+                            {item.category}
+                          </span>
+                          {isRegistered && (
+                            <span className="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full flex items-center gap-1">
+                              <Check className="w-3 h-3" />
+                              Registered
+                            </span>
+                          )}
+                        </div>
 
-                      <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                        <h3 className="text-xl font-bold mb-2">{item.title}</h3>
 
-                      <div className="grid md:grid-cols-2 gap-3 text-sm text-stone-600">
-                        <div className="flex items-center gap-2">
-                          <User className="w-4 h-4" />
-                          <span>{item.presenter}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" />
-                          <span>{new Date(item.date).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4" />
-                          <span>{item.timeEast}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4" />
-                          <span>{item.timeWest}</span>
+                        <p className="text-stone-500 text-sm line-clamp-2 mb-3">{item.description}</p>
+
+                        <div className="grid md:grid-cols-2 gap-3 text-sm text-stone-600">
+                          <div className="flex items-center gap-2">
+                            <User className="w-4 h-4" />
+                            <span>{item.presenter}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Calendar className="w-4 h-4" />
+                            <span>{new Date(item.date).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4" />
+                            <span>{item.timeEast}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Clock className="w-4 h-4" />
+                            <span>{item.timeWest}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -551,7 +487,7 @@ export default function Training() {
                         </button>
                       ) : (
                         <button
-                          onClick={() => handleRegisterWebinar(item.id)}
+                          onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleRegisterWebinar(item.id); }}
                           className="px-6 py-3 bg-[#D7272D] text-white rounded-full font-semibold hover:bg-[#b92127] transition-colors whitespace-nowrap"
                         >
                           Register
@@ -559,7 +495,7 @@ export default function Training() {
                       )}
                     </div>
                   </div>
-                </div>
+                </Link>
               );
             }
 
@@ -569,59 +505,72 @@ export default function Training() {
             const format = (item as { format?: string }).format ?? "";
 
             return (
-              <div key={`s-${item.id}`} className="bg-white rounded-xl border border-stone-200 p-6 hover:border-[#D7272D] transition-all">
+              <Link key={`s-${item.id}`} to={`/members/training/${item.kind}-${item.id}`} className="block bg-white rounded-xl border border-stone-200 p-6 hover:border-[#D7272D] transition-all">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className={`${
-                        format === "virtual"
-                          ? "bg-blue-100 text-blue-700"
-                          : "bg-orange-100 text-orange-700"
-                      } text-xs px-3 py-1 rounded-full flex items-center gap-1`}>
-                        {format === "virtual" ? <Video className="w-3 h-3" /> : <Users className="w-3 h-3" />}
-                        {format === "virtual" ? "Virtual" : "Hands-On"}
-                      </span>
-                      {isRegistered && (
-                        <span className="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full flex items-center gap-1">
-                          <Check className="w-3 h-3" />
-                          Registered
+                  <div className="flex flex-1 flex-col sm:flex-row gap-4">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full sm:w-40 h-[120px] object-cover rounded-lg flex-shrink-0"
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className={`${
+                          format === "virtual"
+                            ? "bg-blue-100 text-blue-700"
+                            : "bg-orange-100 text-orange-700"
+                        } text-xs px-3 py-1 rounded-full flex items-center gap-1`}>
+                          {format === "virtual" ? <Video className="w-3 h-3" /> : <Users className="w-3 h-3" />}
+                          {format === "virtual" ? "Virtual" : "Hands-On"}
                         </span>
-                      )}
-                    </div>
-
-                    <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-
-                    <div className="grid md:grid-cols-2 gap-3 text-sm text-stone-600">
-                      <div className="flex items-center gap-2">
-                        <User className="w-4 h-4" />
-                        <span>{item.presenter}</span>
+                        {isRegistered && (
+                          <span className="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full flex items-center gap-1">
+                            <Check className="w-3 h-3" />
+                            Registered
+                          </span>
+                        )}
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        <span>{new Date(item.date).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</span>
-                      </div>
-                      {"location" in item && (
+
+                      <h3 className="text-xl font-bold mb-2">{item.title}</h3>
+
+                      <p className="text-stone-500 text-sm line-clamp-2 mb-3">{item.description}</p>
+
+                      <div className="grid md:grid-cols-2 gap-3 text-sm text-stone-600">
                         <div className="flex items-center gap-2">
-                          <MapPin className="w-4 h-4" />
-                          <span>{(item as { location: string }).location}</span>
+                          <User className="w-4 h-4" />
+                          <span>{item.presenter}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4" />
+                          <span>{new Date(item.date).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</span>
+                        </div>
+                        {"location" in item && (
+                          <div className="flex items-center gap-2">
+                            <MapPin className="w-4 h-4" />
+                            <span>{(item as { location: string }).location}</span>
+                          </div>
+                        )}
+                        {"duration" in item && (
+                          <div className="flex items-center gap-2">
+                            <span className="font-semibold">Duration:</span>
+                            <span>{(item as { duration: string }).duration}</span>
+                          </div>
+                        )}
+                      </div>
+
+                      {"spots" in item && (
+                        <div className="mt-3 text-sm">
+                          <span className={`font-semibold ${
+                            (item as { spots: number }).spots <= 3 ? "text-red-600" :
+                            (item as { spots: number }).spots <= 7 ? "text-amber-600" :
+                            "text-green-600"
+                          }`}>
+                            {(item as { spots: number }).spots} spots available
+                          </span>
+                          <span className="text-stone-500"> of {(item as { totalSpots: number }).totalSpots}</span>
                         </div>
                       )}
-                      {"duration" in item && (
-                        <div className="flex items-center gap-2">
-                          <span className="font-semibold">Duration:</span>
-                          <span>{(item as { duration: string }).duration}</span>
-                        </div>
-                      )}
                     </div>
-
-                    {"spots" in item && (
-                      <div className="mt-3 text-sm">
-                        <span className={`font-semibold ${(item as { spots: number }).spots <= 5 ? "text-orange-600" : "text-green-600"}`}>
-                          {(item as { spots: number }).spots} spots available
-                        </span>
-                        <span className="text-stone-500"> of {(item as { totalSpots: number }).totalSpots}</span>
-                      </div>
-                    )}
                   </div>
 
                   <div className="flex flex-col gap-2">
@@ -637,7 +586,7 @@ export default function Training() {
                       </button>
                     ) : (
                       <button
-                        onClick={() => handleRegisterSession(item.id)}
+                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleRegisterSession(item.id); }}
                         className="px-6 py-3 bg-[#D7272D] text-white rounded-full font-semibold hover:bg-[#b92127] transition-colors whitespace-nowrap"
                       >
                         Register
@@ -645,7 +594,7 @@ export default function Training() {
                     )}
                   </div>
                 </div>
-              </div>
+              </Link>
             );
           }) : (
             <div className="bg-white rounded-xl border border-stone-200 p-12 text-center">
@@ -826,37 +775,46 @@ export default function Training() {
                   return (
                     <div key={webinar.id} className="bg-white rounded-xl border border-stone-200 p-6 hover:border-[#D7272D] transition-all">
                       <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="bg-purple-100 text-purple-700 text-xs px-3 py-1 rounded-full">
-                              {webinar.category}
-                            </span>
-                            {isRegistered && (
-                              <span className="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full flex items-center gap-1">
-                                <Check className="w-3 h-3" />
-                                Registered
+                        <div className="flex flex-1 flex-col sm:flex-row gap-4">
+                          <img
+                            src={webinar.image}
+                            alt={webinar.title}
+                            className="w-full sm:w-40 h-[120px] object-cover rounded-lg flex-shrink-0"
+                          />
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="bg-purple-100 text-purple-700 text-xs px-3 py-1 rounded-full">
+                                {webinar.category}
                               </span>
-                            )}
-                          </div>
+                              {isRegistered && (
+                                <span className="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full flex items-center gap-1">
+                                  <Check className="w-3 h-3" />
+                                  Registered
+                                </span>
+                              )}
+                            </div>
 
-                          <h3 className="text-xl font-bold mb-3">{webinar.title}</h3>
+                            <h3 className="text-xl font-bold mb-2">{webinar.title}</h3>
 
-                          <div className="grid md:grid-cols-2 gap-3 text-sm text-stone-600">
-                            <div className="flex items-center gap-2">
-                              <User className="w-4 h-4" />
-                              <span>{webinar.presenter}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Calendar className="w-4 h-4" />
-                              <span>{new Date(webinar.date).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Clock className="w-4 h-4" />
-                              <span>{webinar.timeEast}</span>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <Clock className="w-4 h-4" />
-                              <span>{webinar.timeWest}</span>
+                            <p className="text-stone-500 text-sm line-clamp-2 mb-3">{webinar.description}</p>
+
+                            <div className="grid md:grid-cols-2 gap-3 text-sm text-stone-600">
+                              <div className="flex items-center gap-2">
+                                <User className="w-4 h-4" />
+                                <span>{webinar.presenter}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Calendar className="w-4 h-4" />
+                                <span>{new Date(webinar.date).toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" })}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Clock className="w-4 h-4" />
+                                <span>{webinar.timeEast}</span>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Clock className="w-4 h-4" />
+                                <span>{webinar.timeWest}</span>
+                              </div>
                             </div>
                           </div>
                         </div>

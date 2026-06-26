@@ -7,6 +7,7 @@ import Dashboard from "./pages/members/Dashboard";
 import DocumentLibrary from "./pages/members/DocumentLibrary";
 import DocumentViewer from "./pages/members/DocumentViewer";
 import Training from "./pages/members/Training";
+import TrainingDetail from "./pages/members/TrainingDetail";
 import WebinarPlayer from "./pages/members/WebinarPlayer";
 import AskATrainer from "./pages/members/AskATrainer";
 import SubmitQuestion from "./pages/members/SubmitQuestion";
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
       { path: "documents/:id", Component: DocumentViewer },
       { path: "webinars/:id", Component: WebinarPlayer },
       { path: "training", Component: Training },
+      { path: "training/:sessionId", Component: TrainingDetail },
       { path: "ask-a-trainer", Component: AskATrainer },
       { path: "ask-a-trainer/submit", Component: SubmitQuestion },
       { path: "hotline", Component: Hotline },
