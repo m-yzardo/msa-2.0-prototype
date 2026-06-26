@@ -12,7 +12,9 @@
       "Bash(curl -fsSL https://get.pnpm.io/install.sh)",
       "Bash(env PNPM_HOME=/Users/yagozardo/.pnpm sh -)",
       "Bash(git init *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(gh auth *)"
     ]
   }
 }
