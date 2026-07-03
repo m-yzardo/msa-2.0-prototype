@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import { useState, useRef, useEffect } from "react";
 import { Calendar, MapPin, User, Users, Video, Check, Search, ChevronDown, Filter, X, Clock } from "lucide-react";
 import { upcomingWebinars, trainingSessions, onDemandWebinars } from "../../data/trainingData";
+import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 
 const mitchImage = new URL('../../../imports/mitch.jpg', import.meta.url).href;
 const rickImage = new URL('../../../imports/rick.jpg', import.meta.url).href;
@@ -355,30 +356,28 @@ export default function Training() {
         )}
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-4 border-b border-stone-200 mb-8">
-        {(["upcoming", "on-demand", "hands-on", "webinars"] as const).map((tab) => {
-          const labels: Record<typeof tab, string> = {
-            upcoming: "Upcoming",
-            "on-demand": "On Demand",
-            "hands-on": "Hands-On",
-            webinars: "Webinars",
-          };
-          return (
-            <button
-              key={tab}
-              onClick={() => switchTab(tab)}
-              className={`pb-3 px-2 border-b-2 transition-colors font-semibold whitespace-nowrap ${
-                activeTab === tab
-                  ? "border-[#D7272D] text-[#D7272D]"
-                  : "border-transparent text-stone-600 hover:text-stone-900"
-              }`}
-            >
-              {labels[tab]}
-            </button>
-          );
-        })}
-      </div>
+      {/* Tabs — shadcn Tabs (controlled); scrollable strip on mobile so 4 tabs never overflow */}
+      <Tabs value={activeTab} onValueChange={(v) => switchTab(v as typeof activeTab)} className="mb-8">
+        <TabsList className="w-full justify-start gap-4 h-auto p-0 bg-transparent rounded-none border-b border-stone-200 overflow-x-auto flex-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {(["upcoming", "on-demand", "hands-on", "webinars"] as const).map((tab) => {
+            const labels: Record<typeof tab, string> = {
+              upcoming: "Upcoming",
+              "on-demand": "On Demand",
+              "hands-on": "Hands-On",
+              webinars: "Webinars",
+            };
+            return (
+              <TabsTrigger
+                key={tab}
+                value={tab}
+                className="flex-none h-auto rounded-none border-0 border-b-2 border-transparent bg-transparent px-2 pt-0 pb-3 font-semibold text-stone-600 hover:text-stone-900 data-[state=active]:shadow-none data-[state=active]:bg-transparent data-[state=active]:border-[#D7272D] data-[state=active]:text-[#D7272D]"
+              >
+                {labels[tab]}
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
+      </Tabs>
 
       {/* ── Upcoming tab ─────────────────────────────────────────────────── */}
       {activeTab === "upcoming" && (
