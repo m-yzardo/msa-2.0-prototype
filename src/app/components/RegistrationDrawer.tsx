@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Calendar, User, MapPin, CreditCard, Check, Info } from "lucide-react";
 import {
   Sheet,
@@ -36,16 +36,25 @@ export default function RegistrationDrawer({
 }: RegistrationDrawerProps) {
   const [confirmed, setConfirmed] = useState(false);
 
-  // Reset the success view whenever the drawer is opened for a (new) item.
-  const handleOpenChange = (next: boolean) => {
-    if (next) setConfirmed(false);
-    onOpenChange(next);
-  };
+  // Reset to the transaction view every time the drawer opens. This must key off
+  // the `open` prop rather than the Sheet's onOpenChange, because Radix only fires
+  // that callback for its own events (X / overlay / Escape) — not when the parent
+  // opens the drawer programmatically for a newly clicked training.
+  useEffect(() => {
+    if (open) setConfirmed(false);
+  }, [open]);
+
+  // After a successful registration, hold the success view briefly, then close.
+  // Cleaning up the timer prevents a stale close from firing on a fresh reopen.
+  useEffect(() => {
+    if (!confirmed) return;
+    const t = setTimeout(() => onOpenChange(false), 2500);
+    return () => clearTimeout(t);
+  }, [confirmed, onOpenChange]);
 
   const handleComplete = () => {
     onConfirm();
     setConfirmed(true);
-    setTimeout(() => onOpenChange(false), 2500);
   };
 
   const cost = item ? getRegistrationCost(item.kind) : { price: 0 };
@@ -61,7 +70,7 @@ export default function RegistrationDrawer({
   };
 
   return (
-    <Sheet open={open} onOpenChange={handleOpenChange}>
+    <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-full sm:max-w-md p-0 gap-0">
         {!item ? null : confirmed ? (
           // ── Success view ──────────────────────────────────────────────
