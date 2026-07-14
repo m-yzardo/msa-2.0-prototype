@@ -8,7 +8,7 @@ export default function BenefitCategory() {
 
   if (!category) {
     return (
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
         <Link to="/members/benefits" className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 mb-6">
           <ArrowLeft className="w-5 h-5" />
           Back to Benefits
@@ -23,7 +23,7 @@ export default function BenefitCategory() {
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
       {/* Back link */}
       <Link to="/members/benefits" className="inline-flex items-center gap-2 text-stone-600 hover:text-stone-900 mb-6">
         <ArrowLeft className="w-5 h-5" />
