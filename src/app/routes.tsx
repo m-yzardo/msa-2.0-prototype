@@ -12,6 +12,8 @@ import WebinarPlayer from "./pages/members/WebinarPlayer";
 import AskATrainer from "./pages/members/AskATrainer";
 import SubmitQuestion from "./pages/members/SubmitQuestion";
 import Hotline from "./pages/members/Hotline";
+import Benefits from "./pages/members/Benefits";
+import BenefitCategory from "./pages/members/BenefitCategory";
 import NotFound from "./pages/NotFound";
 import AboutPage from "./pages/public/AboutPage";
 import JoinPage from "./pages/public/JoinPage";
@@ -42,6 +44,8 @@ export const router = createBrowserRouter([
       { path: "ask-a-trainer", Component: AskATrainer },
       { path: "ask-a-trainer/submit", Component: SubmitQuestion },
       { path: "hotline", Component: Hotline },
+      { path: "benefits", Component: Benefits },
+      { path: "benefits/:slug", Component: BenefitCategory },
     ],
   },
   {
