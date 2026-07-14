@@ -1,6 +1,21 @@
 // Shared training data — imported by Training.tsx (list), TrainingDetail.tsx (detail),
 // and WebinarPlayer.tsx (recorded webinars).
 
+// Registration pricing. The members area is member-only, so there's no
+// non-member price — in-person hands-on classes carry a flat member fee, while
+// live webinars and virtual sessions are included in membership.
+export const HANDS_ON_PRICE = 49;
+export const HANDS_ON_PERK = "Includes one free technician per class for MSA Pro members.";
+
+export function getRegistrationCost(kind: "hands-on" | "webinar" | "virtual"): {
+  price: number;
+  perk?: string;
+} {
+  return kind === "hands-on"
+    ? { price: HANDS_ON_PRICE, perk: HANDS_ON_PERK }
+    : { price: 0 };
+}
+
 const mitchImage = new URL('../../imports/mitch.jpg', import.meta.url).href;
 const rickImage = new URL('../../imports/rick.jpg', import.meta.url).href;
 const georgeImage = new URL('../../imports/george.jpg', import.meta.url).href;

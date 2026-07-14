@@ -2,6 +2,7 @@ import { Link, useParams } from "react-router";
 import { useState } from "react";
 import { ArrowLeft, User, Calendar, MapPin, Clock, Video, Users, Check } from "lucide-react";
 import { upcomingWebinars, trainingSessions, trainerProfiles } from "../../data/trainingData";
+import RegistrationDrawer from "../../components/RegistrationDrawer";
 
 // Richer, title-matched descriptions for the detail view (cards show the short
 // summary from the data; here we expand on what each session covers).
@@ -84,6 +85,7 @@ export default function TrainingDetail() {
   // Local registration state for the detail page (Training.tsx state isn't shared).
   const [registered, setRegistered] = useState(detail?.registered ?? false);
   const [confirming, setConfirming] = useState(false);
+  const [registrationOpen, setRegistrationOpen] = useState(false);
 
   const handleRegister = () => {
     setRegistered(true);
@@ -242,12 +244,27 @@ export default function TrainingDetail() {
         </button>
       ) : (
         <button
-          onClick={handleRegister}
+          onClick={() => setRegistrationOpen(true)}
           className="px-6 py-3 bg-[#D7272D] text-white rounded-full font-semibold hover:bg-[#b92127] transition-colors"
         >
           Register
         </button>
       )}
+
+      {/* Registration transaction drawer */}
+      <RegistrationDrawer
+        open={registrationOpen}
+        onOpenChange={setRegistrationOpen}
+        item={{
+          title: detail.title,
+          subtitle: detail.trainer,
+          date: detail.date,
+          meta: detail.location ?? detail.timeEast,
+          image: detail.image,
+          kind: detail.type === "Hands-On" ? "hands-on" : detail.type === "Virtual" ? "virtual" : "webinar",
+        }}
+        onConfirm={handleRegister}
+      />
     </div>
   );
 }
