@@ -1,7 +1,7 @@
 import { Outlet, Link, useLocation } from "react-router";
 import { useState, useEffect, useRef } from "react";
 import { MarconeLogoText } from "../MarconeLogoText";
-import { Home, FileText, GraduationCap, MessageSquare, User, Bell, ChevronDown, X, Lock, CreditCard, LogOut, Settings } from "lucide-react";
+import { Home, FileText, GraduationCap, MessageSquare, Award, User, Bell, ChevronDown, X, Lock, CreditCard, LogOut, Settings } from "lucide-react";
 
 const notifications = [
   {
@@ -51,6 +51,7 @@ export default function MembersLayout() {
     { path: "/members/documents", label: "Documents", icon: FileText },
     { path: "/members/training", label: "Training", icon: GraduationCap },
     { path: "/members/ask-a-trainer", label: "Ask a Trainer", icon: MessageSquare },
+    { path: "/members/benefits", label: "Benefits", icon: Award },
   ];
 
   return (
@@ -200,7 +201,7 @@ export default function MembersLayout() {
       </main>
 
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 z-50">
-        <div className="grid grid-cols-4 gap-1">
+        <div className="grid grid-cols-5 gap-1">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = location.pathname === item.path ||

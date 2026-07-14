@@ -13,7 +13,8 @@ This prototype is a single-page React app covering both the public marketing sit
 - Login and Join
 - Dashboard
 - Document library and document viewer
-- Training and webinar player
+- Training and webinar player, with an in-place registration drawer (a lightweight "cart + checkout" for signing up to a session)
+- Member benefits — a two-level section: a hub with U.S. and Canada categories (Training, Health, Business), each opening a page of grouped benefits with partner logos and links
 - Ask a Trainer (browse + submit a question)
 - Technical hotline
 
