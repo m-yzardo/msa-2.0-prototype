@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { FileText, GraduationCap, MessageSquare, Phone, Calendar, Bell, TrendingUp, Video } from "lucide-react";
+import { FileText, GraduationCap, MessageSquare, Phone, Calendar, Bell, TrendingUp } from "lucide-react";
 
 export default function Dashboard() {
   return (
@@ -35,7 +35,7 @@ export default function Dashboard() {
 
       {/* Quick Access Cards */}
       <h2 className="text-xl font-bold mb-4">Quick Access</h2>
-      <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <Link
           to="/members/documents"
           className="bg-white rounded-xl border border-stone-200 p-6 hover:border-[#D7272D] hover:shadow-lg transition-all group"
@@ -53,22 +53,6 @@ export default function Dashboard() {
         </Link>
 
         <Link
-          to="/members/webinars"
-          className="bg-white rounded-xl border border-stone-200 p-6 hover:border-[#D7272D] hover:shadow-lg transition-all group"
-        >
-          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-green-200 transition-colors">
-            <Video className="w-6 h-6 text-green-600" />
-          </div>
-          <h3 className="text-lg font-semibold mb-2">Webinars</h3>
-          <p className="text-sm text-stone-600 mb-3">
-            Live and recorded webinars from industry experts and manufacturers
-          </p>
-          <div className="text-sm font-semibold text-[#D7272D] group-hover:underline">
-            View Webinars →
-          </div>
-        </Link>
-
-        <Link
           to="/members/training"
           className="bg-white rounded-xl border border-stone-200 p-6 hover:border-[#D7272D] hover:shadow-lg transition-all group"
         >
@@ -77,7 +61,7 @@ export default function Dashboard() {
           </div>
           <h3 className="text-lg font-semibold mb-2">Training</h3>
           <p className="text-sm text-stone-600 mb-3">
-            Hands-on training sessions with master technicians
+            Live webinars, on-demand videos, and hands-on sessions with master technicians
           </p>
           <div className="text-sm font-semibold text-[#D7272D] group-hover:underline">
             View Training →
