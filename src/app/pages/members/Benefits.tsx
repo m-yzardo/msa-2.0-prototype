@@ -13,8 +13,8 @@ const kindIcon: Record<BenefitKind, typeof GraduationCap> = {
 // (order there: Webinars → On Demand → Hands-On).
 const quickLinks = [
   { label: "Training Schedule", to: "/members/training?tab=webinars", icon: Video },
-  { label: "Hands-On Training Schedule", to: "/members/training?tab=hands-on", icon: Users },
   { label: "On-Demand Training", to: "/members/training?tab=on-demand", icon: PlayCircle },
+  { label: "Hands-On Training Schedule", to: "/members/training?tab=hands-on", icon: Users },
 ];
 
 export default function Benefits() {
