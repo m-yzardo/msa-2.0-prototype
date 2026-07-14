@@ -46,18 +46,34 @@ export const benefitsIntro = [
 const US_CONTACT: BenefitLink[] = [{ label: "MSA@marcone.com", href: "mailto:MSA@marcone.com" }];
 const CANADA_CONTACT: BenefitLink[] = [{ label: "MSACanada@marcone.com", href: "mailto:MSACanada@marcone.com" }];
 
-// Logos reused across pages (hosted on msaworld.com).
+// Partner logos, bundled locally under src/imports/benefits/. Each path must be
+// a static string literal so Vite fingerprints and bundles the asset.
 const LOGO = {
-  neli: "https://msaworld.com/wp-content/uploads/2024/08/neli-1B.jpg",
-  applianceVideo: "https://msaworld.com/wp-content/uploads/2024/07/appliance-video-logo.jpg",
-  dyer: "https://msaworld.com/wp-content/uploads/2024/07/dyer-logo.jpg",
-  customerConnect: "https://msaworld.com/wp-content/uploads/2025/09/msa-customer-connect-SM.jpg",
-  airsled: "https://msaworld.com/wp-content/uploads/2024/07/airsled-logo.jpg",
-  maLine: "https://msaworld.com/wp-content/uploads/2024/07/MA-Line-logo.jpg",
-  justPressOne: "https://msaworld.com/wp-content/uploads/2024/07/justpressone-SM.jpg",
-  searchKings: "https://msaworld.com/wp-content/uploads/2024/07/search-kings-logo.jpg",
-  serviceWorks: "https://msaworld.com/wp-content/uploads/2024/07/serviceworks-logo.jpg",
-  swReputation: "https://msaworld.com/wp-content/uploads/2024/07/SW-logo.jpg",
+  neli: new URL("../../imports/benefits/neli.jpg", import.meta.url).href,
+  applianceVideo: new URL("../../imports/benefits/appliance-video.jpg", import.meta.url).href,
+  dyer: new URL("../../imports/benefits/dyer.jpg", import.meta.url).href,
+  gigcare: new URL("../../imports/benefits/gigcare.jpg", import.meta.url).href,
+  cleverHealth: new URL("../../imports/benefits/clever-health.jpg", import.meta.url).href,
+  aflac: new URL("../../imports/benefits/aflac.jpg", import.meta.url).href,
+  paylocity: new URL("../../imports/benefits/paylocity.jpg", import.meta.url).href,
+  humana: new URL("../../imports/benefits/humana.jpg", import.meta.url).href,
+  principal: new URL("../../imports/benefits/principal.jpg", import.meta.url).href,
+  kuhlmannAngle: new URL("../../imports/benefits/kuhlmann-angle.jpg", import.meta.url).href,
+  kuhlmann: new URL("../../imports/benefits/kuhlmann.jpg", import.meta.url).href,
+  customerConnect: new URL("../../imports/benefits/customer-connect.jpg", import.meta.url).href,
+  mypartscenter: new URL("../../imports/benefits/mypartscenter.jpg", import.meta.url).href,
+  contractorInCharge: new URL("../../imports/benefits/contractor-in-charge.jpg", import.meta.url).href,
+  iwallet: new URL("../../imports/benefits/iwallet.jpg", import.meta.url).href,
+  truesmb: new URL("../../imports/benefits/truesmb.jpg", import.meta.url).href,
+  justPressOne: new URL("../../imports/benefits/justpressone.jpg", import.meta.url).href,
+  searchKings: new URL("../../imports/benefits/searchkings.jpg", import.meta.url).href,
+  serviceWorks: new URL("../../imports/benefits/serviceworks.jpg", import.meta.url).href,
+  swReputation: new URL("../../imports/benefits/sw.jpg", import.meta.url).href,
+  airsled: new URL("../../imports/benefits/airsled.jpg", import.meta.url).href,
+  maLine: new URL("../../imports/benefits/ma-line.jpg", import.meta.url).href,
+  marks: new URL("../../imports/benefits/marks.jpg", import.meta.url).href,
+  mrLube: new URL("../../imports/benefits/mr-lube.jpg", import.meta.url).href,
+  barrys: new URL("../../imports/benefits/barrys.jpg", import.meta.url).href,
 };
 
 const CUSTOMER_CONNECT_PDF = "https://msaworld.com/wp-content/uploads/2025/09/082625-msa-customer-connect-flyer_FINAL.pdf";
@@ -178,14 +194,14 @@ export const benefitCategories: Record<string, BenefitCategory> = {
             name: "GigCare",
             description:
               "A clean, practical healthcare option for independent contractors and small shops — transparent pricing, an à la carte structure, and nationwide access to major networks (Aetna, Cigna, Blue Cross Blue Shield). Year-round enrollment.",
-            image: "https://msaworld.com/wp-content/uploads/2026/01/gigcare-logo.jpg",
+            image: LOGO.gigcare,
             links: [{ label: "Get started", href: "https://go.kuhlmannfin.com/msa-text-page" }],
           },
           {
             name: "Angle Health",
             description:
               "Health benefit plans made for MSA members and their workers, with a nationwide doctor network, telemedicine, mental health services, and easy digital tools. Medicare enrollment help available.",
-            image: "https://msaworld.com/wp-content/uploads/2025/07/kuhlmann-angle-logo.jpg",
+            image: LOGO.kuhlmannAngle,
             links: [
               { label: "Learn more", href: "https://www.anglehealth.com/partnerships/marcone" },
               { label: "Medicare enrollment", href: "https://www.planenroll.com/?purl=Robert-Broyles" },
@@ -194,7 +210,7 @@ export const benefitCategories: Record<string, BenefitCategory> = {
           {
             name: "Humana Dental & Vision",
             description: "World-class group dental and vision insurance with no waiting periods.",
-            image: "https://msaworld.com/wp-content/uploads/2024/07/humana-logo.jpg",
+            image: LOGO.humana,
             links: [{ label: "Enroll", href: "https://www.surveymonkey.com/r/MSAHumana" }],
           },
         ],
@@ -206,7 +222,7 @@ export const benefitCategories: Record<string, BenefitCategory> = {
             name: "Clever Health Telemedicine",
             description:
               "Virtual care for minor illnesses, plus Bella — an anonymous, 24/7 AI chat bot for anxiety and depression — and Clever Connections peer support.",
-            image: "https://msaworld.com/wp-content/uploads/2025/04/clever-health.jpg",
+            image: LOGO.cleverHealth,
             links: [{ label: "Register", href: "https://www.surveymonkey.com/r/CleverHealthMember" }],
           },
           {
@@ -223,7 +239,7 @@ export const benefitCategories: Record<string, BenefitCategory> = {
             name: "Aflac Ancillary Insurance",
             description:
               "Customizable individual plans powered by group rates, with simplified underwriting and coverage that stays with you regardless of employment.",
-            image: "https://msaworld.com/wp-content/uploads/2025/02/aflac-logo.jpg",
+            image: LOGO.aflac,
             links: [{ label: "Build a plan", href: "https://buy.aflac.com/?partnerId=AA28266&caseId=MSA" }],
           },
         ],
@@ -236,14 +252,14 @@ export const benefitCategories: Record<string, BenefitCategory> = {
             description:
               "A mobile-first HRIS with an open API, scalable architecture, and award-winning service at preferred MSA pricing.",
             highlight: "Up to 40% off",
-            image: "https://msaworld.com/wp-content/uploads/2025/02/paylocity-logo.jpg",
+            image: LOGO.paylocity,
             links: [{ label: "Get pricing", href: "https://www.surveymonkey.com/r/MSAPaylocity" }],
           },
           {
             name: "Principal 401(k) Plans",
             description:
               "An SMB 401(k) through a PEP program with professional administration, reduced fiduciary risk, and consolidated-audit savings. Best for members with 10+ employees.",
-            image: "https://msaworld.com/wp-content/uploads/2025/02/principal-logo.jpg",
+            image: LOGO.principal,
             links: [{ label: "Learn more", href: "https://landing.principal.com/MSA/" }],
           },
         ],
@@ -255,7 +271,7 @@ export const benefitCategories: Record<string, BenefitCategory> = {
             name: "Kuhlmann Group Benefits Advisory",
             description:
               "Complimentary consultation for MSA Pro members with five or more employees, covering medical, long-term care, and disability benefits.",
-            image: "https://msaworld.com/wp-content/uploads/2024/07/kuhlman-logo.jpg",
+            image: LOGO.kuhlmann,
             links: [{ label: "Request a consult", href: "https://www.surveymonkey.com/r/MSAHealthcareAdvisory" }],
           },
         ],
@@ -289,7 +305,7 @@ export const benefitCategories: Record<string, BenefitCategory> = {
             description:
               "An all-in-one marketing platform — SEO, AI search visibility, Google Ads, social/email marketing, and website design — plus a free SEO audit.",
             highlight: "$698/mo ($898)",
-            image: "https://msaworld.com/wp-content/uploads/2025/10/trueSMB-logo.jpg",
+            image: LOGO.truesmb,
             links: [{ label: "Free SEO audit", href: "https://truesmb.com/free-seo-audit-report/" }],
           },
           {
@@ -319,7 +335,7 @@ export const benefitCategories: Record<string, BenefitCategory> = {
             name: "iWallet",
             description:
               "A field point-of-sale payment app with preferred rates for MSA Pro members, remote check deposits, free reputation-management tools, and technician tipping.",
-            image: "https://msaworld.com/wp-content/uploads/2024/07/iWallet-logo-SM.jpg",
+            image: LOGO.iwallet,
             links: [
               { label: "Visit iWallet", href: "https://iwallet.com" },
               { label: "Request a demo", href: "https://www.surveymonkey.com/r/iWalletDemo" },
@@ -329,7 +345,7 @@ export const benefitCategories: Record<string, BenefitCategory> = {
             name: "Contractor In Charge",
             description:
               "Turnkey bookkeeping and financial operations support built for service contractors, with CFO-level insights.",
-            image: "https://msaworld.com/wp-content/uploads/2025/12/contractor-in-charge-400x140-1.jpg",
+            image: LOGO.contractorInCharge,
             links: [{ label: "View benefits (PDF)", href: "https://msaworld.com/wp-content/uploads/2025/12/msaworld-contractor-in-charge-benefits.pdf" }],
           },
           {
@@ -358,7 +374,7 @@ export const benefitCategories: Record<string, BenefitCategory> = {
             description:
               "Refer DIY customers to Marcone for parts and earn quarterly rebates of 15% of their spending. The $49 startup fee is refunded after $1,000 in first-year parts sales.",
             highlight: "15% rebate",
-            image: "https://msaworld.com/wp-content/uploads/2025/07/mypartscenter-logo-1A.jpg",
+            image: LOGO.mypartscenter,
             links: [{ label: "Application (PDF)", href: "https://msaworld.com/wp-content/uploads/2025/07/MSA-mypartscenter-application.pdf" }],
           },
         ],
@@ -472,7 +488,7 @@ export const benefitCategories: Record<string, BenefitCategory> = {
             description:
               "The premier manufacturer of surface-restoration products, known for fixing appliance finishes. Pro member discount.",
             highlight: "15% off",
-            image: "https://406.1f2.myftpupload.com/wp-content/uploads/2024/07/barrys-logo.jpg",
+            image: LOGO.barrys,
             links: [{ label: "Visit Barry's", href: "https://www.barrysrestoreitall.com" }],
           },
         ],
@@ -484,14 +500,14 @@ export const benefitCategories: Record<string, BenefitCategory> = {
             name: "Mark's Wearhouse",
             description: "Discount on select merchandise with your MSA card.",
             highlight: "10% off",
-            image: "https://406.1f2.myftpupload.com/wp-content/uploads/2024/07/marks-logo.jpg",
+            image: LOGO.marks,
             links: [{ label: "Visit Mark's", href: "https://www.marks.com/en.html" }],
           },
           {
             name: "Mr. Lube",
             description: "Discount on tire and oil services at all locations.",
             highlight: "10% off",
-            image: "https://406.1f2.myftpupload.com/wp-content/uploads/2024/07/Mr-Lube-logo.jpg",
+            image: LOGO.mrLube,
             links: [{ label: "Visit Mr. Lube", href: "https://www.mrlube.com" }],
           },
         ],
