@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { useState, useRef, useEffect } from "react";
 import { Plus, MessageSquare, User, Calendar, ChevronDown, ChevronUp, Search, Filter, X } from "lucide-react";
+import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 
 const allQuestions = [
   {
@@ -246,29 +247,26 @@ export default function AskATrainer() {
         )}
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-4 border-b border-stone-200 mb-6">
-        <button
-          onClick={() => setActiveTab("all")}
-          className={`pb-3 px-2 border-b-2 transition-colors font-semibold ${
-            activeTab === "all"
-              ? "border-[#D7272D] text-[#D7272D]"
-              : "border-transparent text-stone-600 hover:text-stone-900"
-          }`}
-        >
-          All Q&As
-        </button>
-        <button
-          onClick={() => setActiveTab("my-questions")}
-          className={`pb-3 px-2 border-b-2 transition-colors font-semibold ${
-            activeTab === "my-questions"
-              ? "border-[#D7272D] text-[#D7272D]"
-              : "border-transparent text-stone-600 hover:text-stone-900"
-          }`}
-        >
-          My Questions
-        </button>
-      </div>
+      {/* Tabs — shadcn Tabs, matching the Training page for consistency */}
+      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as typeof activeTab)} className="mb-6">
+        <TabsList className="w-full justify-start gap-4 h-auto p-0 bg-transparent rounded-none border-b border-stone-200 overflow-x-auto flex-nowrap [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {(["all", "my-questions"] as const).map((tab) => {
+            const labels: Record<typeof tab, string> = {
+              all: "All Q&As",
+              "my-questions": "My Questions",
+            };
+            return (
+              <TabsTrigger
+                key={tab}
+                value={tab}
+                className="flex-none h-auto rounded-none border-0 border-b-2 border-transparent bg-transparent px-2 pt-0 pb-3 font-semibold text-stone-600 hover:text-stone-900 data-[state=active]:shadow-none data-[state=active]:bg-transparent data-[state=active]:border-[#D7272D] data-[state=active]:text-[#D7272D]"
+              >
+                {labels[tab]}
+              </TabsTrigger>
+            );
+          })}
+        </TabsList>
+      </Tabs>
 
       {/* Questions List */}
       <div className="space-y-4">
