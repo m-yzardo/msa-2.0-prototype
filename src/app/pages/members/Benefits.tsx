@@ -2,23 +2,24 @@ import { Link } from "react-router";
 import { GraduationCap, Heart, Briefcase, Video, Users, PlayCircle } from "lucide-react";
 import { benefitsIntro, benefitCountries, type BenefitKind } from "../../data/benefitsData";
 
-// Icon + color per category kind, matching the app's colored-circle card style.
-const kindStyle: Record<BenefitKind, { icon: typeof GraduationCap; bg: string; bgHover: string; text: string }> = {
-  training: { icon: GraduationCap, bg: "bg-yellow-100", bgHover: "group-hover:bg-yellow-200", text: "text-yellow-600" },
-  health: { icon: Heart, bg: "bg-green-100", bgHover: "group-hover:bg-green-200", text: "text-green-600" },
-  business: { icon: Briefcase, bg: "bg-blue-100", bgHover: "group-hover:bg-blue-200", text: "text-blue-600" },
+// Icon per category kind. Neutral stone circle with the icon itself in MSA red.
+const kindIcon: Record<BenefitKind, typeof GraduationCap> = {
+  training: GraduationCap,
+  health: Heart,
+  business: Briefcase,
 };
 
-// Resource links at the bottom — point into the prototype's Training section.
+// Resource links at the bottom — deep-link into the Training section's tabs
+// (order there: Webinars → On Demand → Hands-On).
 const quickLinks = [
-  { label: "Virtual Training Schedule", to: "/members/training", icon: Video },
-  { label: "Hands-On Training Schedule", to: "/members/training", icon: Users },
-  { label: "Webinar Library by Appliance", to: "/members/training", icon: PlayCircle },
+  { label: "Training Schedule", to: "/members/training?tab=webinars", icon: Video },
+  { label: "Hands-On Training Schedule", to: "/members/training?tab=hands-on", icon: Users },
+  { label: "On-Demand Training", to: "/members/training?tab=on-demand", icon: PlayCircle },
 ];
 
 export default function Benefits() {
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-24 md:pb-8">
       {/* Intro */}
       <div className="mb-10">
         <h1 className="text-3xl font-bold text-stone-900 mb-4">Member Benefits</h1>
@@ -46,16 +47,15 @@ export default function Benefits() {
               }`}
             >
               {country.categories.map(cat => {
-                const style = kindStyle[cat.kind];
-                const Icon = style.icon;
+                const Icon = kindIcon[cat.kind];
                 return (
                   <Link
                     key={cat.slug}
                     to={`/members/benefits/${cat.slug}`}
                     className="flex flex-col bg-white rounded-xl border border-stone-200 p-6 hover:border-[#D7272D] hover:shadow-lg transition-all group"
                   >
-                    <div className={`w-12 h-12 ${style.bg} rounded-full flex items-center justify-center mb-4 ${style.bgHover} transition-colors`}>
-                      <Icon className={`w-6 h-6 ${style.text}`} />
+                    <div className="w-12 h-12 bg-stone-100 rounded-full flex items-center justify-center mb-4 group-hover:bg-stone-200 transition-colors">
+                      <Icon className="w-6 h-6 text-[#D7272D]" />
                     </div>
                     <h3 className="text-lg font-semibold mb-2">{cat.label}</h3>
                     <p className="text-sm text-stone-600 mb-3 flex-1">{cat.blurb}</p>

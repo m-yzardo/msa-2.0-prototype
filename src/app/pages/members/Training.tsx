@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useSearchParams } from "react-router";
 import { useState, useRef, useEffect } from "react";
 import { Calendar, User, Users, Video, Check, Search, ChevronDown, Filter, X, Clock } from "lucide-react";
 import { upcomingWebinars, onDemandWebinars } from "../../data/trainingData";
@@ -123,7 +123,15 @@ function groupOnDemandByMonth<T extends { date: string }>(videos: T[]) {
 // ── Component ────────────────────────────────────────────────────────────────
 
 export default function Training() {
-  const [activeTab, setActiveTab] = useState<"on-demand" | "hands-on" | "webinars">("webinars");
+  // Allow deep-linking to a tab via ?tab= (e.g. from the Benefits page).
+  const [searchParams] = useSearchParams();
+  const tabParam = searchParams.get("tab");
+  const initialTab = (["webinars", "on-demand", "hands-on"] as const).includes(
+    tabParam as "webinars" | "on-demand" | "hands-on",
+  )
+    ? (tabParam as "on-demand" | "hands-on" | "webinars")
+    : "webinars";
+  const [activeTab, setActiveTab] = useState<"on-demand" | "hands-on" | "webinars">(initialTab);
   const [searchQuery, setSearchQuery] = useState("");
 
   // Registration state — kept separate to avoid ID collisions between webinars and tour stops
